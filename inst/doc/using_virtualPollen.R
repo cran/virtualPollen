@@ -1,4 +1,4 @@
-## ----setup, warning=FALSE, message=FALSE, echo=FALSE---------------------
+## ----setup, warning=FALSE, message=FALSE, echo=FALSE--------------------------
 #checking if required packages are installed, and installing them if not
 list.of.packages <- c("ggplot2", "cowplot", "knitr", "viridis", "tidyr", "formatR", "grid", "devtools", "magrittr", "kableExtra", "viridis")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
@@ -30,7 +30,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.pos= "h")
 opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=FALSE)
 
 
-## ---- size="small"-------------------------------------------------------
+## ---- size="small"------------------------------------------------------------
 
 #sets a state for the generator of pseudo-random numbers
 set.seed(1)
@@ -62,7 +62,7 @@ p2 <- ggplot(data=acfToDf(random.walk, 5000, 50), aes(x=lag, y=acf)) +
 plot_grid(p1, p2, labels = c("a", "b"), align = "h")
 
 
-## ---- size="small"-------------------------------------------------------
+## ---- size="small"------------------------------------------------------------
 
 #setting a fixed seed for the generator of pseudo-random numbers
 set.seed(1)
@@ -81,14 +81,14 @@ ggplot(data=data.frame(Time=rep(1:length(a), 2), Value=c(a, b), Legend=c(rep("Or
   theme(legend.position="right") + 
   ggtitle("Effect of a convolution filter")
 
-## ---- results="asis", echo=FALSE-----------------------------------------
+## ---- results="asis", echo=FALSE----------------------------------------------
 
 temp.table <- data.frame(row=1:5, a=round(a, 2), b=round(b, 2))
 temp.table$operation <- c("b1 = a1 x f2 + a2 x f1",  "b2 = a2 x f2 + a3 x f1", "b3 = a3 x f2 + a4 x f1" , "b4 = a4 x f2 + a5 x f1", "b5 = a5 x f2 + a6 x f1")
 kable(temp.table, caption = "Original sequence (a), filtered sequence (b), and filtering operations. Numbers beside letters a and b represent row numbers, while f1 and f2 represent the values of the convolution filter (both equal to 1 in this case).", booktabs = T) %>% kable_styling(latex_options = c("hold_position", "striped"))
 
 
-## ---- size="small"-------------------------------------------------------
+## ---- size="small"------------------------------------------------------------
 
 moves.10 <- filter(moves, filter=rep(1, 10), circular=TRUE)
 moves.100 <- filter(moves, filter=rep(1, 100), circular=TRUE)
@@ -128,7 +128,7 @@ p7 <- ggplot(data=acfToDf(moves.100, 200, 50), aes(x=lag, y=acf)) +
 plot_grid(p4, p5, p6, p7, labels = c("a", "b", "c", "d"), align = "v", nrow=2)
 
 
-## ---- size="small"-------------------------------------------------------
+## ---- size="small"------------------------------------------------------------
 moves.5000 <- filter(moves, filter=rep(1, 5000), circular=TRUE)
 
 ## ---- fig.height=2.5, fig.width=9, fig.cap="Sequence moves.5000 (a) and its temporal autocorrelation (b). In this case there is a large deviation between the required temporal autocorrelation (5000) and the outcome (2000).", echo=FALSE----
@@ -162,7 +162,7 @@ driver <- simulateDriverS(
  filename=NULL)
 
 
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 
 parameters <- parametersDataframe(rows=1)
 parameters[1,] <- c("Species 1", 50, 20, 2, 0.2, 0, 100, 10000, 1, 0, 50, 10, 0, 0, 600, 0)
@@ -180,7 +180,7 @@ parameters.t <- parameters.t[c(1:8, 10:11), ]
 kable(parameters.t, caption="Parameters of a virtual species. Note that driver.B is ommited in order to simplify the explanation of the model.", booktabs = T) %>% kable_styling(latex_options = c("hold_position", "striped"))
 
 
-## ---- size="small"-------------------------------------------------------
+## ---- size="small"------------------------------------------------------------
 niche.A <- dnorm(x=0:100, mean=50, sd=10)
 
 ## ---- fig.height=2.5, fig.width=6, fig.cap="Ecological niche of the virtual species (blue) against the density (relative availability of values over time) of the driver (gray). Both densities have been scaled in the range [0, 1].", echo=FALSE----
@@ -296,7 +296,7 @@ ggplot(data=temp.df, aes(x=Age, y=Pm, color=Pm)) +
 rm(temp.df)
 
 
-## ---- eval=FALSE, size="small"-------------------------------------------
+## ---- eval=FALSE, size="small"------------------------------------------------
 #  
 #  #parameters (1st line in dataframe "parameters")
 #  maximum.age <- parameters[1, "maximum.age"]
@@ -408,7 +408,7 @@ plotSimulation(simulation.output=simulation,
                line.size=0.4)
 
 
-## ---- message=TRUE, warning=TRUE, echo=FALSE-----------------------------
+## ---- message=TRUE, warning=TRUE, echo=FALSE----------------------------------
 
 parameters[2,] <- c("Species 2", 50, 20, 4, 0.3, 0, 100, 10000, 1, 0, 50, 15, 0, 0, 600, 600)
 parameters[3,] <- c("Species 3", 50, 20, 6, 0.4, 0.5, 100, 10000, 1, 0, 50, 20, 0, 0, 600, 600)
@@ -442,7 +442,7 @@ compareSimulations(simulation.output=simulation,
                    time.zoom = c(5600, 6400))
 
 
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 parameters.test <- parametersDataframe(rows=1)
 parameters.test[1,] <- c("Test 1", 4, 1, 0.55, 2, 0, 1, 30, 0.5, 0.5, 50, 10, 50, 10, 100, 100)
 parameters.test[2,] <- c("Test 2", 3, 1, 0.5, 2, 0, 1, 30, 0.5, 0.5, 50, 10, 50, 10, 100, 100)
@@ -459,7 +459,7 @@ parameters.t <- parameters.t[1:(nrow(parameters.t)-2),]
 kable(parameters.t, caption="Parameters of virtual taxa used to test model limits.")
 rm(parameters.t)
 
-## ---- message=FALSE------------------------------------------------------
+## ---- message=FALSE-----------------------------------------------------------
 simulation.test.1 <- simulatePopulation(
   parameters=parameters.test,
   driver.A=jitter(rep(50, 500), amount=4)
@@ -470,7 +470,7 @@ compareSimulations(simulation.output=simulation.test.1,
                    columns="Pollen", 
                    time.zoom = c(0, 200))
 
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 parameters.test[3,] <- c("Test 3", 1000, 100, 0.5, 0.05, 0, 100, 10000, 0.5, 0.5, 50, 10, 50, 10, 100, 100)
 parameters.test[4,] <- c("Test 4", 1000, 500, 0.5, 0.05, 0, 100, 10000, 0.5, 0.5, 50, 10, 50, 10, 100, 100)
 parameters.test[5,] <- c("Test 5", 1000, 900, 0.5, 0.05,0, 100, 10000, 0.5, 0.5, 50, 10, 50, 10, 100, 100)
@@ -487,7 +487,7 @@ parameters.t <- parameters.t[1:(nrow(parameters.t)-2),]
 kable(parameters.t, caption="Parameters of virtual taxa used to test model limits.")
 rm(parameters.t)
 
-## ---- message=FALSE------------------------------------------------------
+## ---- message=FALSE-----------------------------------------------------------
 simulation.test.2 <- simulatePopulation(
   parameters=parameters.test,
   species=c(3:5),
@@ -505,10 +505,10 @@ accumulation.rate <- simulateAccumulationRate(seed=140,
                                               output.min=1, 
                                               output.max=50)
 
-## ---- echo=FALSE---------------------------------------------------------
+## ---- echo=FALSE--------------------------------------------------------------
 kable(accumulation.rate[1:20, ], caption="Dataframe resulting from the function to generate virtual accumulation rates. Each group in the grouping column has as many elements as accumulation.rate the given group has.", booktabs = T) %>% kable_styling(latex_options = c("hold_position", "striped"))
 
-## ---- size="small"-------------------------------------------------------
+## ---- size="small"------------------------------------------------------------
 simulation.aggregated <- aggregateSimulation(
   simulation.output=simulation, 
   accumulation.rate=accumulation.rate, 
@@ -532,7 +532,7 @@ simulated.data = simulation.aggregated[[1, 3]]
 hist(simulated.data[2:nrow(simulated.data),"Time"] - simulated.data[1:(nrow(simulated.data)-1),"Time"], main="Age differences between consecutive samples", xlab="Age difference between consecutive samples", col=viridis(12, begin = 0, end=1))
 
 
-## ---- size="small", eval=FALSE-------------------------------------------
+## ---- size="small", eval=FALSE------------------------------------------------
 #  
 #  #getting example data sampled at 2cm intervals
 #  simulated.data = simulation.aggregated[[1, 3]]
@@ -570,7 +570,7 @@ hist(simulated.data[2:nrow(simulated.data),"Time"] - simulated.data[1:(nrow(simu
 #  #gives time to look at result before closing the plot window
 #  Sys.sleep(5)
 
-## ---- warning=FALSE, size="small"----------------------------------------
+## ---- warning=FALSE, size="small"---------------------------------------------
 
 simulation.interpolated <- toRegularTime(
   x=simulation.aggregated,
